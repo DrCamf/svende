@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class UserCourseMaterial extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'course_id',
+        'materialPath'
+    ];
 }

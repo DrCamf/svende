@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Tutoring;
 
 class TutoringController extends Controller
 {
@@ -11,7 +13,7 @@ class TutoringController extends Controller
      */
     public function index()
     {
-        //
+        return Tutoring::all();
     }
 
     /**
@@ -19,7 +21,12 @@ class TutoringController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'titel' => 'required',
+            'price' => 'required'
+        ]);
+        
+        return Tutoring::create($request->all());
     }
 
     /**
@@ -27,7 +34,7 @@ class TutoringController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Tutoring::find($id);
     }
 
     /**
@@ -35,7 +42,9 @@ class TutoringController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $tutoring = Tutoring::find($id);
+        $tutoring->update($request->all());
+        return $tutoring;
     }
 
     /**
@@ -43,6 +52,6 @@ class TutoringController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return Tutoring::destroy($id);
     }
 }

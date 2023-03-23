@@ -10,7 +10,6 @@ class Tutoring extends Model
     use HasFactory;
     protected $fillable = [
         'titel',
-        'body',
-        'sent'
+        'price'
     ];
 }

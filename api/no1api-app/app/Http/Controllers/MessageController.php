@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Message;
 
 class MessageController extends Controller
 {
@@ -11,7 +13,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        return Message::all();
     }
 
     /**
@@ -19,7 +21,13 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'subject' => 'required',
+            'body' => 'required',
+            'sent' => 'required'
+        ]);
+        
+        return Message::create($request->all());
     }
 
     /**
@@ -27,7 +35,7 @@ class MessageController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Message::find($id);
     }
 
     /**
@@ -35,7 +43,9 @@ class MessageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $message = Message::find($id);
+        $message->update($request->all());
+        return $message;
     }
 
     /**
@@ -43,6 +53,6 @@ class MessageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return Message::destroy($id);
     }
 }

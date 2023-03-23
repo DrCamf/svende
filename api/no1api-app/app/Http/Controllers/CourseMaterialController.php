@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CourseMaterial;
 
 class CourseMaterialController extends Controller
 {
@@ -11,7 +13,7 @@ class CourseMaterialController extends Controller
      */
     public function index()
     {
-        //
+        return CourseMaterial::all();
     }
 
     /**
@@ -19,7 +21,12 @@ class CourseMaterialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'course_id' => 'required',
+            'materialPath' => 'required'
+        ]);
+        
+        return CourseMaterial::create($request->all());
     }
 
     /**
@@ -27,7 +34,7 @@ class CourseMaterialController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return CourseMaterial::find($id);
     }
 
     /**
@@ -35,7 +42,9 @@ class CourseMaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $courseMaterial = CourseMaterial::find($id);
+        $courseMaterial->update($request->all());
+        return $courseMaterial;
     }
 
     /**
@@ -43,6 +52,6 @@ class CourseMaterialController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return CourseMaterial::destroy($id);
     }
 }

@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('city', function (Blueprint $table) {
+        Schema::create('user_messages', function (Blueprint $table) {
             $table->id();
-            $table->integer('zipcode_id');
-            $table->integer('zipcode');
-            $table->string('city');
+            $table->integer('message_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('city');
+        Schema::dropIfExists('user_messages');
     }
 };

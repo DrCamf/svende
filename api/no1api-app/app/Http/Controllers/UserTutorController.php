@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\UserTutor;
 
 class UserTutorController extends Controller
 {
@@ -11,7 +13,7 @@ class UserTutorController extends Controller
      */
     public function index()
     {
-        //
+        return UserTutor::all();
     }
 
     /**
@@ -19,7 +21,13 @@ class UserTutorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tutor_id' => 'required',
+            'user_id' => 'required',
+          
+        ]);
+        
+        return UserTutor::create($request->all());
     }
 
     /**
@@ -27,7 +35,7 @@ class UserTutorController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return UserTutor::find($id);
     }
 
     /**
@@ -35,7 +43,9 @@ class UserTutorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $userTutor = UserTutor::find($id);
+        $userTutor->update($request->all());
+        return $userTutor;
     }
 
     /**
@@ -43,6 +53,6 @@ class UserTutorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return UserTutor::destroy($id);
     }
 }

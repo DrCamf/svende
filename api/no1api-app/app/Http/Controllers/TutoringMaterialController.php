@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TutoringMaterial;
+
 
 class TutoringMaterialController extends Controller
 {
@@ -11,7 +14,7 @@ class TutoringMaterialController extends Controller
      */
     public function index()
     {
-        //
+        return TutoringMaterial::all();
     }
 
     /**
@@ -19,7 +22,12 @@ class TutoringMaterialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tutor_id' => 'required',
+            'materialPath' => 'required'
+        ]);
+        
+        return TutoringMaterial::create($request->all());
     }
 
     /**
@@ -27,7 +35,7 @@ class TutoringMaterialController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return TutoringMaterial::find($id);
     }
 
     /**
@@ -35,7 +43,9 @@ class TutoringMaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $tutoringMaterial = TutoringMaterial::find($id);
+        $tutoringMaterial->update($request->all());
+        return $tutoringMaterial;
     }
 
     /**
@@ -43,6 +53,6 @@ class TutoringMaterialController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return TutoringMaterial::destroy($id);
     }
 }

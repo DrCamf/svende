@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Course;
 
 class CourseController extends Controller
 {
@@ -11,7 +13,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        return Course::all();
     }
 
     /**
@@ -19,7 +21,15 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'lections' => 'required',
+            'estimatedTime' => 'required'
+        ]);
+        
+        return Course::create($request->all());
     }
 
     /**
@@ -27,7 +37,7 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Course::find($id);
     }
 
     /**
@@ -35,7 +45,9 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $course = Course::find($id);
+        $course->update($request->all());
+        return $course;
     }
 
     /**
@@ -43,6 +55,11 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return Course::destroy($id);
+    }
+
+    public function search($name)
+    {
+        return Course::where('name', 'like', '%'.$name.'%')->get();
     }
 }

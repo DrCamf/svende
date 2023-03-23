@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\UserMessage;
 
 class UserMessageController extends Controller
 {
@@ -11,7 +13,7 @@ class UserMessageController extends Controller
      */
     public function index()
     {
-        //
+        return UserMessage::all();
     }
 
     /**
@@ -19,7 +21,13 @@ class UserMessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'message_id' => 'required',
+            'user_id' => 'required',
+          
+        ]);
+        
+        return UserMessage::create($request->all());
     }
 
     /**
@@ -27,7 +35,7 @@ class UserMessageController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return UserMessage::find($id);
     }
 
     /**
@@ -35,7 +43,10 @@ class UserMessageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $userMessage = UserMessage::find($id);
+        $userMessage->update($request->all());
+        return $userMessage;
+    
     }
 
     /**
@@ -43,6 +54,6 @@ class UserMessageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return UserMessage::destroy($id);
     }
 }

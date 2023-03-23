@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\City;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -11,7 +12,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        return City::all();
     }
 
     /**
@@ -19,7 +20,11 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'zipcode' => 'required',
+            'city' => 'required'
+        ]);
+        return City::create($request->all());
     }
 
     /**
@@ -27,7 +32,7 @@ class CityController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return City::find($id);
     }
 
     /**
@@ -35,7 +40,9 @@ class CityController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $city = City::find($id);
+        $city->update($request->all());
+        return $city;
     }
 
     /**
@@ -43,6 +50,6 @@ class CityController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return City::destroy($id);
     }
 }

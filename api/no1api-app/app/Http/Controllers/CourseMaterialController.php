@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CourseMaterial;
@@ -34,7 +34,13 @@ class CourseMaterialController extends Controller
      */
     public function show(string $id)
     {
-        return CourseMaterial::find($id);
+        $courseMaterial = DB::table('course_materials')
+        ->select('course_materials.materialPath')
+        ->where('course_materials.course_id', $id)
+        ->get();
+
+        return $courseMaterial;
+
     }
 
     /**

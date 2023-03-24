@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\UserCourse;
+use Illuminate\Support\Facades\DB;
 
-class UserCourseController extends Controller
+
+class UserCoursesListController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return UserCourse::all();
+        //
     }
 
     /**
@@ -21,12 +21,7 @@ class UserCourseController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'course_id' => 'required',
-            'user_id' => 'required'
-        ]);
-        
-        return UserCourse::create($request->all());
+        //
     }
 
     /**
@@ -34,7 +29,13 @@ class UserCourseController extends Controller
      */
     public function show(string $id)
     {
-        return UserCourse::find($id);
+        $courses = DB::table('courses')
+        ->join('user_courses', 'courses.id',  '=', 'user_courses.course_id')
+        ->select('courses.name', 'courses.description', 'courses.lections', 'courses.estimatedTime')
+        ->where('user_courses.user_id', $id)
+        ->get();
+
+        return $courses;
     }
 
     /**
@@ -42,9 +43,7 @@ class UserCourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $userCourse = UserCourse::find($id);
-        $userCourse->update($request->all());
-        return $userCourse;
+       
     }
 
     /**
@@ -52,6 +51,6 @@ class UserCourseController extends Controller
      */
     public function destroy(string $id)
     {
-        return UserCourse::destroy($id);
+        //
     }
 }

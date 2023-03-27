@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UserCourse;
+use Illuminate\Support\Facades\DB;
 
 class UserCourseController extends Controller
 {
@@ -13,6 +14,7 @@ class UserCourseController extends Controller
      */
     public function index()
     {
+       
         return UserCourse::all();
     }
 
@@ -34,7 +36,17 @@ class UserCourseController extends Controller
      */
     public function show(string $id)
     {
-        return UserCourse::find($id);
+        $usercourses = DB::table('user_courses')
+        ->join('users', 'users.id',  '=', 'user_courses.user_id')
+        ->join('courses', 'courses.id',  '=', 'user_courses.course_id')
+        ->join('roles', 'roles.id',  '=', 'users.role_id')
+        ->select('courses.name', 'users.firstName', 'users.lastName')
+        ->where('roles.id', '=', '1')
+        ->where('user_courses.course_id', $id)
+        ->get();
+
+
+        return $usercourses;
     }
 
     /**

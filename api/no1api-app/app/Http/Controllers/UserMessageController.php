@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UserMessage;
 
+use Illuminate\Support\Facades\DB;
+
 class UserMessageController extends Controller
 {
     /**
@@ -28,6 +30,21 @@ class UserMessageController extends Controller
         ]);
         
         return UserMessage::create($request->all());
+    }
+
+    public function allmessages(string $id) 
+    {
+        $messages = DB::table('user_messages')
+        ->join('users', 'users.id',  '=', 'user_courses.user_id')
+        ->join('messages', 'messages.id',  '=', 'user_messages.message_id')
+       
+        ->select('messages.subject', 'messages.body', 'messages.sent', )
+       
+        ->where('user_courses.course_id', $id)
+        ->get();
+
+
+        return $messages;
     }
 
     /**

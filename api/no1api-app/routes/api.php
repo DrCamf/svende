@@ -26,28 +26,49 @@ use App\Http\Controllers\CourseMaterialController;
 
 //Public routes
 
+// for create user
 Route::get('/role', [RoleController::class, 'index']);
 Route::get('/city', [CityController::class, 'index']);
-
 Route::post('/users', [UserController::class, 'store']);
 
 Route::get('/courses', [CourseController::class, 'index']);
 
 Route::get('/courses/{id}', [CourseController::class, 'show']);
+
 Route::get('/users/{id}', [UserController::class, 'show']);
+
 Route::get('/userscourses/{id}', [UserCoursesListController::class, 'show']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
 //Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-
-   
-    Route::post('/tutor', [TutoringController::class, 'store']);
+    // read
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/coursematerial/{id}', [CourseMaterialController::class, 'show']);
+
+
+    Route::get('/usercourse/{id}', [UserCourseController::class, 'show']);
+    
+    // create
+    Route::post('/tutor', [TutoringController::class, 'store']);
     Route::post('/courses', [CourseController::class, 'store']);
     Route::post('/usercourse', [UserCourseController::class, 'store']);
-    Route::get('/coursematerial/{id}', [CourseMaterialController::class, 'show']);
     Route::post('/coursematerial', [CourseMaterialController::class, 'store']);
+    
+    // update
+    Route::put('/role/{id}', [RoleController::class, 'update']);
+    Route::put('/city/{id}', [CityController::class, 'update']);
+    Route::put('/tutor/{id}', [TutoringController::class, 'update']);
+    Route::put('/courses/{id}' , [CourseController::class, 'update']);
+    Route::put('/users/{id}', [UserController::class, 'update']);
+
+    
+    // delete
+    Route::delete('/role/{id}', [RoleController::class, 'destroy']);
+    Route::delete('/city/{id}', [CityController::class, 'destroy']);
+    Route::delete('/tutor/{id}', [TutoringController::class, 'destroy']);
+    Route::delete('/courses/{id}' , [CourseController::class, 'destroy']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 });

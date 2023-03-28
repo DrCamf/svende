@@ -40,7 +40,7 @@ class UserMessageController extends Controller
        
         ->select('messages.subject', 'messages.body', 'messages.sent', )
        
-        ->where('user_courses.course_id', $id)
+        ->where('user_courses.course_id', "=", $id)
         ->get();
 
 

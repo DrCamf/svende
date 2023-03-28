@@ -47,22 +47,26 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/coursematerial/{id}', [CourseMaterialController::class, 'show']);
 
-
     Route::get('/usercourse/{id}', [UserCourseController::class, 'show']);
+    Route::get('/usercourseall/{id}', [UserMessageController::class, 'allmessages']);
     
     // create
     Route::post('/tutor', [TutoringController::class, 'store']);
     Route::post('/courses', [CourseController::class, 'store']);
     Route::post('/usercourse', [UserCourseController::class, 'store']);
     Route::post('/coursematerial', [CourseMaterialController::class, 'store']);
-    
+    Route::post('/tutormaterial', [TutoringMaterialController::class, 'store']);
+    Route::post('/usermessage', [UserMessageController::class, 'store']);
+
     // update
     Route::put('/role/{id}', [RoleController::class, 'update']);
     Route::put('/city/{id}', [CityController::class, 'update']);
     Route::put('/tutor/{id}', [TutoringController::class, 'update']);
     Route::put('/courses/{id}' , [CourseController::class, 'update']);
     Route::put('/users/{id}', [UserController::class, 'update']);
-
+    Route::put('/coursematerial/{id}', [CourseMaterialController::class, 'update']);
+    Route::put('/tutormaterial/{id}', [TutoringMaterialController::class, 'update']);
+    Route::put('/usermessage/{id}', [UserMessageController::class, 'update']);
     
     // delete
     Route::delete('/role/{id}', [RoleController::class, 'destroy']);
@@ -70,5 +74,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/tutor/{id}', [TutoringController::class, 'destroy']);
     Route::delete('/courses/{id}' , [CourseController::class, 'destroy']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
-
+    Route::delete('/coursematerial/{id}', [CourseMaterialController::class, 'destroy']);
+    Route::delete('/tutormaterial/{id}', [TutoringMaterialController::class, 'destroy']);
+    Route::delete('/usermessage/{id}', [UserMessageController::class, 'destroy']);
 });

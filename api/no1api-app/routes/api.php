@@ -30,7 +30,7 @@ use App\Http\Controllers\CourseMaterialController;
 Route::get('/role', [RoleController::class, 'index']);
 Route::get('/city', [CityController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
-
+Route::get('/city/search/{name}', [CityController::class, 'search']);
 Route::get('/courses', [CourseController::class, 'index']);
 
 Route::get('/courses/{id}', [CourseController::class, 'show']);
@@ -42,7 +42,7 @@ Route::get('/userscourses/{id}', [UserCoursesListController::class, 'show']);
 Route::post('/login', [AuthController::class, 'login']);
 
 //Protected routes
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::middleware(['auth:sanctum'])->group(function  () {
     // read
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/coursematerial/{id}', [CourseMaterialController::class, 'show']);
@@ -57,7 +57,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/coursematerial', [CourseMaterialController::class, 'store']);
     Route::post('/tutormaterial', [TutoringMaterialController::class, 'store']);
     Route::post('/usermessage', [UserMessageController::class, 'store']);
-
+    Route::get('/city', [CityController::class, 'store']);
+    
     // update
     Route::put('/role/{id}', [RoleController::class, 'update']);
     Route::put('/city/{id}', [CityController::class, 'update']);

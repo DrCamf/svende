@@ -52,4 +52,11 @@ class CityController extends Controller
     {
         return City::destroy($id);
     }
+
+    public function search($name)
+    {
+        return City::where('city', 'like', '%'.$name.'%')->get();
+    }
+
+
 }

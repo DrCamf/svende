@@ -11,8 +11,8 @@ use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\UserCoursesListController;
 use App\Http\Controllers\TutoringController;
 use App\Http\Controllers\CourseMaterialController;
-
-
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserMessageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,7 +57,8 @@ Route::middleware(['auth:sanctum'])->group(function  () {
     Route::post('/coursematerial', [CourseMaterialController::class, 'store']);
     Route::post('/tutormaterial', [TutoringMaterialController::class, 'store']);
     Route::post('/usermessage', [UserMessageController::class, 'store']);
-    Route::get('/city', [CityController::class, 'store']);
+    Route::post('/city', [CityController::class, 'store']);
+    Route::post('/message', [MessageController::class, 'store']);
     
     // update
     Route::put('/role/{id}', [RoleController::class, 'update']);

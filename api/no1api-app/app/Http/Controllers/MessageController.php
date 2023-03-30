@@ -24,7 +24,7 @@ class MessageController extends Controller
         $request->validate([
             'subject' => 'required',
             'body' => 'required',
-            'sent' => 'required'
+            'sent_at' => 'required'
         ]);
         
         return Message::create($request->all());

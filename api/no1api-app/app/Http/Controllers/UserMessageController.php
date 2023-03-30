@@ -25,8 +25,8 @@ class UserMessageController extends Controller
     {
         $request->validate([
             'message_id' => 'required',
-            'user_id' => 'required',
-          
+            'sendt_id' => 'required',
+            'receive_id' => 'required'
         ]);
         
         return UserMessage::create($request->all());

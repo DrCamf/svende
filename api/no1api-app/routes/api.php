@@ -33,6 +33,8 @@ Route::post('/users', [UserController::class, 'store']);
 Route::get('/city/search/{name}', [CityController::class, 'search']);
 Route::get('/courses', [CourseController::class, 'index']);
 
+Route::get('/users/search/{email}', [UserController::class, 'search']);
+
 Route::get('/courses/{id}', [CourseController::class, 'show']);
 
 Route::get('/users/{id}', [UserController::class, 'show']);

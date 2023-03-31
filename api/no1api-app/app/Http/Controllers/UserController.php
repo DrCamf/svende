@@ -98,6 +98,12 @@ class UserController extends Controller
         return User::find($id);
     }
 
+
+    public function getUser(string $email) 
+    {
+        return User::where('email', '=' , $email )->get();
+    }
+
     /**
      * Update the specified resource in storage.
      */

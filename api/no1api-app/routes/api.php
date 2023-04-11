@@ -31,6 +31,7 @@ Route::get('/role', [RoleController::class, 'index']);
 Route::get('/city', [CityController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/city/search/{name}', [CityController::class, 'search']);
+Route::get('/city/searchzip/{zipnr}', [CityController::class, 'searchzip']);
 Route::get('/courses', [CourseController::class, 'index']);
 
 Route::get('/users/search/{email}', [UserController::class, 'search']);

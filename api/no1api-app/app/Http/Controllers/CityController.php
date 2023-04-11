@@ -20,11 +20,13 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
+        $city = new City;
         $request->validate([
             'zipcode' => 'required',
             'city' => 'required'
         ]);
-        return City::create($request->all());
+        //return City::create($request->all());
+        return response()->json(array('success' => true, 'last_insert_id' => $city->id), 200);
     }
 
     /**
@@ -56,6 +58,11 @@ class CityController extends Controller
     public function search($name)
     {
         return City::where('city', 'like', '%'.$name.'%')->get();
+    }
+
+    public function searchzip($zipnr) 
+    {
+        return City::where('zipcode', '=', $zipnr)->get();
     }
 
 

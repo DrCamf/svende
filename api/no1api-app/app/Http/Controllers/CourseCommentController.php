@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseComments;
 use Illuminate\Http\Request;
 
 class CourseCommentController extends Controller
@@ -11,7 +12,7 @@ class CourseCommentController extends Controller
      */
     public function index()
     {
-        //
+        return CourseComments::all();
     }
 
     /**

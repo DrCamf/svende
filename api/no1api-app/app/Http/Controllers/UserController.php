@@ -26,6 +26,7 @@ class UserController extends Controller
        $fields = $request->validate([
             'firstName' => 'required|string',
             'lastName' => 'required|string',
+            'callName' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'adress' => 'required|string',
             'zipcode_id' => 'required|integer',
@@ -40,6 +41,7 @@ class UserController extends Controller
         $user = User::create([
             'firstName' => $fields['firstName'],
             'lastName' => $fields['lastName'],
+            'callName' =>$fields['callName'],
             'email' => $fields['email'],
             'adress' => $fields['adress'],
             'zipcode_id' => $fields['zipcode_id'],
@@ -57,7 +59,7 @@ class UserController extends Controller
             'user' => $user,
             'token' => $token
         ];
-        echo "whut";
+        
         return response($response, 201);
     }
     
@@ -119,6 +121,17 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        return User::destroy($id);
+        $user = User::find($id);
+        $user->User::update([
+            'firstName' => "anonym",
+            'lastName' => "anonym",
+            'email' => "anonym" . $id,
+            'adress' => "anonym",
+            'phone' => "anonym",
+            'picturePath' => "anonym"
+            
+        ]);
+
+       // return User::destroy($id);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -23,10 +22,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       $fields = $request->validate([
+        $fields = $request->validate([
             'firstName' => 'required|string',
             'lastName' => 'required|string',
-            'callName' => 'required|string|unique:users,callName',
             'email' => 'required|string|unique:users,email',
             'adress' => 'required|string',
             'zipcode_id' => 'required|integer',
@@ -41,7 +39,6 @@ class UserController extends Controller
         $user = User::create([
             'firstName' => $fields['firstName'],
             'lastName' => $fields['lastName'],
-            'callName' =>$fields['callName'],
             'email' => $fields['email'],
             'adress' => $fields['adress'],
             'zipcode_id' => $fields['zipcode_id'],
@@ -52,14 +49,14 @@ class UserController extends Controller
             'password' => bcrypt($fields['password'])
         ]);
         
-        $token = $user->createToken('myapptoken')->plainTextToken;
+         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        // Skal ses på pga gpdr
+        // Skal ses p책 pga gpdr
         $response = [
             'user' => $user,
             'token' => $token
         ];
-        
+
         return response($response, 201);
     }
     
@@ -80,7 +77,7 @@ class UserController extends Controller
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
-      
+
         $response = [
             'userid' => $user->id,
             'firstname' => $user->firstName,
@@ -90,15 +87,15 @@ class UserController extends Controller
 
         return response($response, 201);
     }
-
-    public function logout() {
+    
+      public function logout() {
         $this->user()->tokens->each(function($token, $key) {
             $token->delete();
         });
     
         return response()->json('Successfully logged out');
     }
-
+    
 
     /**
      * Display the specified resource.
@@ -107,8 +104,7 @@ class UserController extends Controller
     {
         return User::find($id);
     }
-
-
+    
     public function getUser(string $email) 
     {
         return User::where('email', '=' , $email )->get();
@@ -129,17 +125,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
-        $user->User::update([
-            'firstName' => "anonym",
-            'lastName' => "anonym",
-            'email' => "anonym" . $id,
-            'adress' => "anonym",
-            'phone' => "anonym",
-            'picturePath' => "anonym"
-            
-        ]);
-
-       // return User::destroy($id);
+        return User::destroy($id);
     }
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthContoller;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\UserController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\TutoringController;
 use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserMessageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,31 +26,36 @@ use App\Http\Controllers\UserMessageController;
 */
 
 //Public routes
-
 // for create user
 Route::get('/role', [RoleController::class, 'index']);
 Route::get('/city', [CityController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/city/search/{name}', [CityController::class, 'search']);
 Route::get('/city/searchzip/{zipnr}', [CityController::class, 'searchzip']);
-Route::get('/courses', [CourseController::class, 'index']);
-
-Route::get('/users/search/{email}', [UserController::class, 'search']);
+Route::get('/users/search/{email}', [UserController::class, 'getUser']);
 
 Route::get('/courses/{id}', [CourseController::class, 'show']);
-
+Route::get('/users/search/{email}', [UserController::class, 'search']);
 Route::get('/users/{id}', [UserController::class, 'show']);
-
+ Route::get('/users', [UserController::class, 'index']);
 Route::get('/userscourses/{id}', [UserCoursesListController::class, 'show']);
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
+
+
+Route::get('/usercourse/{id}', [UserCourseController::class, 'show']);
+ Route::post('/usermessage', [UserMessageController::class, 'store']);
+ Route::get('/message', [MessageController::class, 'index']);
+ Route::post('/message', [MessageController::class, 'store']);
 //Protected routes
-Route::middleware(['auth:sanctum'])->group(function  () {
-    // read
-    Route::get('/users', [UserController::class, 'index']);
+Route::middleware(['auth:sanctum'])->group(function () {
+   
+   // read
+   
     Route::get('/coursematerial/{id}', [CourseMaterialController::class, 'show']);
-
+Route::get('/courses', [CourseController::class, 'index']);
     Route::get('/usercourse/{id}', [UserCourseController::class, 'show']);
     Route::get('/usercourseall/{id}', [UserMessageController::class, 'allmessages']);
     
@@ -59,10 +65,10 @@ Route::middleware(['auth:sanctum'])->group(function  () {
     Route::post('/usercourse', [UserCourseController::class, 'store']);
     Route::post('/coursematerial', [CourseMaterialController::class, 'store']);
     Route::post('/tutormaterial', [TutoringMaterialController::class, 'store']);
-    Route::post('/usermessage', [UserMessageController::class, 'store']);
-    Route::post('/city', [CityController::class, 'store']);
-    Route::post('/message', [MessageController::class, 'store']);
-    
+   
+     Route::post('/city', [CityController::class, 'store']);
+   
+
     // update
     Route::put('/role/{id}', [RoleController::class, 'update']);
     Route::put('/city/{id}', [CityController::class, 'update']);
